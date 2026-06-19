@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>인간이란 무엇인가?</title>
+
+  <!-- Pixel-style font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/galmuri@latest/dist/galmuri.css">
+  
+
+  <!-- Connect external CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- =========================
+       START SCREEN
+       Role:
+       First screen the user sees.
+       ========================= -->
+  <section id="start_screen" class="screen active">
+    <div class="start_box">
+      <p class="game_label">INTERACTIVE LITERARY RPG</p>
+
+      <h1 class="main_title">인간이란 무엇인가?</h1>
+
+      <p class="main_description">
+        This game begins with one question and three rooms.
+        <br>
+        Choose a character, enter the room,
+        <br>
+        and watch what happens when identity no longer fits its walls.
+      </p>
+
+      <!-- Start button -->
+      <button id="start_button" class="main_button">START</button>
+    </div>
+  </section>
+
+  <!-- =========================
+       CHARACTER SELECT SCREEN
+       Role:
+       Appears after START is clicked.
+       Three large image buttons fill the screen.
+       ========================= -->
+  <section id="select_screen" class="screen">
+    
+    <!-- Oedipus button -->
+    <button class="character_button oedipus_button" onclick="enterOedipusRoom()">
+      <div class="button_overlay"></div>
+      <div class="button_text">
+        <p class="button_number">01</p>
+        <h2>OEDIPUS</h2>
+        <p class="button_caption">The one who believed he knew the truth.</p>
+      </div>
+    </button>
+
+    <!-- Willy Loman button -->
+     <button class="character_button willy_button" onclick="enterWillyRoom()">
+      <div class="button_overlay"></div>
+      <div class="button_text">
+        <p class="button_number">02</p>
+        <h2>WILLY LOMAN</h2>
+        <p class="button_caption">The one who believed he could still become someone.</p>
+      </div>
+    </button>
+
+    <!-- Sy button -->
+    <button class="character_button sy_button" onclick="entersyRoom()">
+      <div class="button_overlay"></div>
+      <div class="button_text">
+        <p class="button_number">03</p>
+        <h2>Yoon</h2>
+        <p class="button_caption">The one who believed the self had to stay whole.</p>
+      </div>
+    </button>
+</section>
+  <!-- =========================
+       MESSAGE BOX
+       Role:
+       Temporary popup message when a character button is clicked.
+       Later this can be replaced with actual page transitions.
+       ========================= -->
+  <div id="message_box"></div>
+
+
+<!-- =========================
+     OEDIPUS ROOM SCREEN
+     Role:
+     This screen appears after the player selects Oedipus.
+     Layout:
+     - left: profile panel
+     - center: room image + overlapping character image
+     - bottom center: dialogue box
+     - right: object buttons
+     ========================= -->
+<section id="oedipus_room_screen" class="screen">
+
+  <div class="game_layout">
+
+    <!-- LEFT PANEL -->
+    <aside class="left_panel">
+      <div class="profile_card">
+        <div class="profile_image_frame">
+          <img src="oe_pfp.jpg" alt="Oedipus profile" class="profile_image">
+        </div>
+
+        <h2 class="profile_name">OEDIPUS</h2>
+
+        <div class="status_block">
+          <p class="status_label">HP</p>
+          <div class="status_bar"><div class="fill hp_fill" id="oedipus_hp_fill"></div></div>
+        </div>
+
+        <div class="status_block">
+          <p class="status_label">PAIN</p>
+          <div class="status_bar"><div class="fill pain_fill" id="oedipus_pain_fill"></div></div>
+        </div>
+
+        <div class="status_block">
+          <p class="status_label">???</p>
+          <div class="status_bar"><div class="fill question_fill" id="oedipus_question_fill"></div></div>
+        </div>
+
+        <button class="ui_button small_button" onclick="backToSelect()">BACK</button>
+      </div>
+    </aside>
+
+    <!-- CENTER PANEL -->
+    <main class="center_panel">
+
+      <!-- ROOM AREA -->
+      <div class="room_stage">
+        <img src="oe_room.gif" alt="Oedipus room" class="room_bg">
+        <img src="oe_ovl.png" alt="Oedipus character" class="room_character" id="oedipus_character_image">
+      </div>
+
+      <!-- DIALOGUE BOX -->
+    <div class="dialogue_box" id="oedipus_dialogue_box">
+      <div class="dialogue_inner">
+        <p id="oedipus_dialogue_text">
+        오이디푸스의 방이다...
+        </p>
+      </div>
+    </div>
+    </main>
+
+    <!-- RIGHT PANEL -->
+    <aside class="right_panel">
+  <div class="object_button_group">
+
+    <!-- object buttons: Korean lines only, image does not change -->
+    <button class="ui_button object_button" onclick="showOedipusObjectText('crown')">CROWN</button>
+    <button class="ui_button object_button" onclick="showOedipusObjectText('sword')">SWORD</button>
+    <button class="ui_button object_button" onclick="showOedipusObjectText('eye')">EYE ORNAMENTS</button>
+    <button class="ui_button object_button" onclick="showOedipusObjectText('spikes')">SPIKES</button>
+    <button class="ui_button object_button" onclick="showOedipusObjectText('mirror')">MIRROR</button>
+
+    <!-- trial buttons: image changes + English direct quote -->
+    <button class="ui_button trial_button" onclick="runOedipusTrial1()">1</button>
+    <button class="ui_button trial_button" onclick="runOedipusTrial2()">2</button>
+
+    <button class="ui_button next_button" onclick="goToOedipusEndingChoice()">NEXT</button>
+
+  </div>
+</aside>
+
+  </div>
+</section>
+
+<!-- =========================
+     OEDIPUS ENDING CHOICE SCREEN
+     ========================= -->
+<section id="oedipus_ending_choice_screen" class="screen">
+  <div class="ending_choice_wrap">
+    <button class="ending_choice_button original_choice" onclick="showOedipusEnding1()">
+      <div class="button_overlay"></div>
+      <div class="button_text">
+        <p class="button_number">A</p>
+        <h2>ORIGINAL STORY</h2>
+        <p class="button_caption">Follow the tragic path of the original play.</p>
+      </div>
+    </button>
+
+    <button class="ending_choice_button adapted_choice" onclick="showOedipusEnding2()">
+      <div class="button_overlay"></div>
+      <div class="button_text">
+        <p class="button_number">B</p>
+        <h2>ADAPTED STORY</h2>
+        <p class="button_caption">Follow the rewritten path beyond collapse.</p>
+      </div>
+    </button>
+  </div>
+</section>
+
+<!-- =========================
+     OEDIPUS ENDING 1 SCREEN
+     ========================= -->
+<section id="oedipus_ending1_screen" class="screen">
+  <div class="ending_screen_wrap">
+    <div class="ending_image_frame">
+      <img src="oe_ending1.jpg" alt="Oedipus original ending" class="ending_image">
+    </div>
+
+   <div class="ending_status_block">
+  <p class="ending_status_label">??? → OPPORTUNITY</p>
+  <div class="status_bar">
+    <div class="fill opportunity_fill" style="width: 0%;"></div>
+  </div>
+</div>
+
+    <div class="ending_text_wrap">
+  <p id="oedipus_ending1_text" class="ending_text_en">
+    He sought the truth as if truth could leave him untouched.<br>But revelation did not free him.<br>It shattered the self that believed it could stand outside its own fate.
+  </p>
+</div>
+
+<div class="ending_button_row">
+  <button class="ui_button ending_back_button" onclick="backToEndingChoice()">BACK</button>
+  <button class="ui_button ending_back_button" onclick="backToSelectFromEnding()">BACK TO CHARACTER SELECT</button>
+</div>
+
+  </div>
+</section>
+
+<!-- =========================
+     OEDIPUS ENDING 2 SCREEN
+     ========================= -->
+<section id="oedipus_ending2_screen" class="screen">
+  <div class="ending_screen_wrap">
+    <div class="ending_image_frame">
+      <img src="oe_ending2.gif" alt="Oedipus adapted ending" class="ending_image">
+    </div>
+
+<div class="ending_status_block">
+  <p class="ending_status_label">??? → OPPORTUNITY</p>
+  <div class="status_bar">
+    <div class="fill opportunity_fill" style="width: 85%;"></div>
+  </div>
+</div>
+    <div class="ending_text_wrap">
+  <p id="oedipus_ending2_text" class="ending_text_kr">
+    그는 더 이상 자신을 단 하나의 이름으로 부를 수 없게 되었다. <br> 그러나 무너진 뒤의 방은 끝이 아니라,<br> 이전과는 다른 방식으로 스스로를 견뎌내야 하는 공간이 되었다.
+  </p>
+</div>
+
+<div class="ending_button_row">
+  <button class="ui_button ending_back_button" onclick="backToEndingChoice()">BACK</button>
+  <button class="ui_button ending_back_button" onclick="backToSelectFromEnding()">BACK TO CHARACTER SELECT</button>
+  <button class="ui_button ending_question_button" onclick="goToHumanAnswerScreen()">그래서, 인간이란 무엇인가?</button>
+</div>
+    </div>
+    </section>
+
+
+<!-- =========================
+     WILLY ROOM SCREEN
+     ========================= -->
+<section id="willy_room_screen" class="screen">
+  <div class="game_layout">
+    <aside class="left_panel">
+      <div class="profile_card">
+        <div class="profile_image_frame">
+          <img src="willy_pfp.jpg" alt="Willy profile" class="profile_image">
+        </div>
+
+        <h2 class="profile_name">WILLY LOMAN</h2>
+
+        <div class="status_block">
+          <p class="status_label">HP</p>
+          <div class="status_bar"><div class="fill hp_fill" id="willy_hp_fill"></div></div>
+        </div>
+
+        <div class="status_block">
+          <p class="status_label">PAIN</p>
+          <div class="status_bar"><div class="fill pain_fill" id="willy_pain_fill"></div></div>
+        </div>
+
+        <div class="status_block">
+          <p class="status_label">???</p>
+          <div class="status_bar"><div class="fill question_fill" id="willy_question_fill"></div></div>
+        </div>
+
+        <button class="ui_button next_button" onclick="backToSelect()">BACK</button>
+      </div>
+    </aside>
+
+    <main class="center_panel">
+      <div class="room_stage">
+        <img src="willy_room.gif" alt="Willy room" class="room_bg">
+        <img src="willy_ovl.png" alt="Willy character" class="room_character" id="willy_character_image">
+      </div>
+
+      <div class="dialogue_box" id="willy_dialogue_box">
+        <div class="dialogue_inner">
+          <p id="willy_dialogue_text">윌리 로먼의 방이다...</p>
+        </div>
+      </div>
+    </main>
+
+    <aside class="right_panel">
+      <div class="object_button_group">
+        <button class="ui_button object_button" onclick="showWillyObjectText('money')">MONEY</button>
+        <button class="ui_button object_button" onclick="showWillyObjectText('phone')">PHONE</button>
+        <button class="ui_button object_button" onclick="showWillyObjectText('map')">MAP</button>
+        <button class="ui_button object_button" onclick="showWillyObjectText('medal')">MEDAL</button>
+        <button class="ui_button object_button" onclick="showWillyObjectText('mirror')">MIRROR</button>
+
+        <button class="ui_button trial_button" onclick="runWillyTrial1()">1</button>
+        <button class="ui_button trial_button" onclick="runWillyTrial2()">2</button>
+
+        <button class="ui_button next_button" onclick="goToWillyEndingChoice()">NEXT</button>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- =========================
+     WILLY ENDING CHOICE SCREEN
+     ========================= -->
+<section id="willy_ending_choice_screen" class="screen">
+  <div class="ending_choice_wrap">
+    <button class="ending_choice_button original_choice" onclick="showWillyEnding1()">
+      <div class="button_overlay"></div>
+      <div class="button_text">
+        <p class="button_number">A</p>
+        <h2>ORIGINAL STORY</h2>
+        <p class="button_caption">Follow the tragic path of the original play.</p>
+      </div>
+    </button>
+
+    <button class="ending_choice_button adapted_choice" onclick="showWillyEnding2()">
+      <div class="button_overlay"></div>
+      <div class="button_text">
+        <p class="button_number">B</p>
+        <h2>ADAPTED STORY</h2>
+        <p class="button_caption">Follow the rewritten path beyond collapse.</p>
+      </div>
+    </button>
+  </div>
+</section>
+
+<!-- =========================
+     WILLY ENDING 1 SCREEN
+     ========================= -->
+<section id="willy_ending1_screen" class="screen">
+  <div class="ending_screen_wrap">
+    <div class="ending_image_frame">
+      <img src="willy_ending1.jpg" alt="Willy original ending" class="ending_image">
+    </div>
+    <div class="ending_status_block">
+  <p class="ending_status_label">??? → OPPORTUNITY</p>
+  <div class="status_bar">
+    <div class="fill opportunity_fill" style="width: 0%;"></div>
+  </div>
+</div>
+
+    <div class="ending_text_wrap">
+      <p id="willy_ending1_text" class="ending_text_en">
+        He mistook the dream for the self<br>and could not survive the distance between them.<br>In the end, he chose a final performance over the pain of becoming someone else.
+      </p>
+    </div>
+
+    <div class="ending_button_row">
+      <button class="ui_button ending_back_button" onclick="backToWillyEndingChoice()">BACK</button>
+      <button class="ui_button ending_back_button" onclick="backToSelectFromEnding()">BACK TO CHARACTER SELECT</button>
+    </div>
+  </div>
+</section>
+
+<!-- =========================
+     WILLY ENDING 2 SCREEN
+     ========================= -->
+<section id="willy_ending2_screen" class="screen">
+  <div class="ending_screen_wrap">
+    <div class="ending_image_frame">
+      <img src="willy_ending2.gif" alt="Willy adapted ending" class="ending_image">
+    </div>
+
+    <div class="ending_status_block">
+  <p class="ending_status_label">??? → OPPORTUNITY</p>
+  <div class="status_bar">
+    <div class="fill opportunity_fill" style="width: 85%;"></div>
+  </div>
+</div>
+
+    <div class="ending_text_wrap">
+      <p id="willy_ending2_text" class="ending_text_kr">
+        그는 마침내 자신이 되어야만 한다고 믿었던 사람을 놓아주었다.<br>새 방은 초라했지만, 처음으로 창문이 있었고, 그곳에는 남의 시선이 아니라<br>자신의 숨이 드나들 자리가 남아 있었다.
+      </p>
+    </div>
+
+    <div class="ending_button_row">
+      <button class="ui_button ending_back_button" onclick="backToWillyEndingChoice()">BACK</button>
+      <button class="ui_button ending_back_button" onclick="backToSelectFromEnding()">BACK TO CHARACTER SELECT</button>
+      <button class="ui_button ending_question_button" onclick="goToHumanAnswerScreen()">그래서, 인간이란 무엇인가?</button>
+    </div>
+  </div>
+</section>
+
+<!-- =========================
+     SY ROOM SCREEN
+     ========================= -->
+<section id="sy_room_screen" class="screen">
+  <div class="game_layout">
+    <aside class="left_panel">
+      <div class="profile_card">
+        <div class="profile_image_frame">
+          <img src="sy_pfp.jpg" alt="Yoon profile" class="profile_image">
+        </div>
+
+        <h2 class="profile_name">YOON</h2>
+
+        <div class="status_block">
+          <p class="status_label">HP</p>
+          <div class="status_bar"><div class="fill hp_fill" id="sy_hp_fill"></div></div>
+        </div>
+
+        <div class="status_block">
+          <p class="status_label">PAIN</p>
+          <div class="status_bar"><div class="fill pain_fill" id="sy_pain_fill"></div></div>
+        </div>
+
+        <div class="status_block">
+          <p class="status_label">???</p>
+          <div class="status_bar"><div class="fill question_fill" id="sy_question_fill"></div></div>
+        </div>
+
+        <button class="ui_button next_button" onclick="backToSelect()">BACK</button>
+      </div>
+    </aside>
+
+    <main class="center_panel">
+      <div class="room_stage">
+        <img src="sy_room.gif" alt="Yoon room" class="room_bg">
+        <img src="sy_ovl.gif" alt="Yoon character" class="room_character" id="sy_character_image">
+    </div>
+
+      <div class="dialogue_box" id="sy_dialogue_box">
+        <div class="dialogue_inner">
+          <p id="sy_dialogue_text">윤의 방이다...</p>
+        </div>
+      </div>
+    </main>
+
+    <aside class="right_panel">
+      <div class="object_button_group">
+        <button class="ui_button object_button" onclick="showSyObjectText('mirror')">MIRROR</button>
+        <button class="ui_button object_button" onclick="showSyObjectText('water')">WATER</button>
+        <button class="ui_button object_button" onclick="showSyObjectText('eye')">EYES</button>
+        <button class="ui_button object_button" onclick="showSyObjectText('locks')">LOCKS</button>
+        <button class="ui_button object_button" onclick="showSyObjectText('underwear')">UNDERWEARS</button>
+
+        <button class="ui_button trial_button" onclick="runSyTrial1()">1</button>
+        <button class="ui_button trial_button" onclick="runSyTrial2()">2</button>
+
+        <button class="ui_button next_button" onclick="goToSyEndingChoice()">NEXT</button>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- =========================
+     SY ENDING CHOICE SCREEN
+     ========================= -->
+<section id="sy_ending_choice_screen" class="screen">
+  <div class="ending_choice_wrap">
+    <button class="ending_choice_button original_choice" onclick="showSyEnding1()">
+      <div class="button_overlay"></div>
+      <div class="button_text">
+        <p class="button_number">A</p>
+        <h2>ENDING 1</h2>
+        <p class="button_caption">Let Yoon stay in her room...</p>
+      </div>
+    </button>
+
+    <button class="ending_choice_button adapted_choice" onclick="showSyEnding2()">
+      <div class="button_overlay"></div>
+      <div class="button_text">
+        <p class="button_number">B</p>
+        <h2>ENDING 2</h2>
+        <p class="button_caption">Let Yoon open the door...</p>
+      </div>
+    </button>
+  </div>
+</section>
+
+<!-- =========================
+     SY ENDING 1 SCREEN
+     ========================= -->
+<section id="sy_ending1_screen" class="screen">
+  <div class="ending_screen_wrap">
+    <div class="ending_image_frame">
+      <img src="sy_ending1.gif" alt="Yoon original ending" class="ending_image">
+    </div>
+
+    <div class="ending_status_block">
+  <p class="ending_status_label">??? → OPPORTUNITY</p>
+  <div class="status_bar">
+    <div class="fill opportunity_fill" style="width: 0%;"></div>
+  </div>
+</div>
+
+    <div class="ending_text_wrap">
+      <p id="sy_ending1_text" class="ending_text_en">
+        Yoon did not open the door. Yet the intruder broke the lock and ruined the room.<br>As she lloked at what remained, water began to swell insider her body.<br>Was it the floodwater, or only her tears refusing to stop.
+      </p>
+    </div>
+
+    <div class="ending_button_row">
+      <button class="ui_button ending_back_button" onclick="backToSyEndingChoice()">BACK</button>
+      <button class="ui_button ending_back_button" onclick="backToSelectFromEnding()">BACK TO CHARACTER SELECT</button>
+    </div>
+  </div>
+</section>
+
+<!-- =========================
+     SY ENDING 2 SCREEN
+     ========================= -->
+<section id="sy_ending2_screen" class="screen">
+  <div class="ending_screen_wrap">
+    <div class="ending_image_frame">
+      <img src="sy_ending2.gif" alt="Yoon adapted ending" class="ending_image">
+    </div>
+
+    <div class="ending_status_block">
+  <p class="ending_status_label">??? → OPPORTUNITY</p>
+  <div class="status_bar">
+    <div class="fill opportunity_fill" style="width: 85%;"></div>
+  </div>
+</div>
+
+    <div class="ending_text_wrap">
+      <p id="sy_ending2_text" class="ending_text_kr">
+        용기를 내어 문을 열었다.<br>문을 두드리던 정체는 바람이었나.<br>날씨가 좋아서 윤은 커튼을 열고 밖으로 나갔다. 크게 달라진 것은 없다.<br>하지만 햇볕에 물이 곧 마를 것만 같다.
+      </p>
+    </div>
+
+    <div class="ending_button_row">
+      <button class="ui_button ending_back_button" onclick="backToSyEndingChoice()">BACK</button>
+      <button class="ui_button ending_back_button" onclick="backToSelectFromEnding()">BACK TO CHARACTER SELECT</button>
+      <button class="ui_button ending_question_button" onclick="goToHumanAnswerScreen()">그래서, 인간이란 무엇인가?</button>
+    </div>
+  </div>
+</section>
+
+<!-- =========================
+     HUMAN ANSWER SCREEN
+     ========================= -->
+<section id="human_answer_screen" class="screen">
+  <!-- soft particle bg-->
+   <div class="ending_particles" aria-hidden="true">
+    <span class="particle p1"></span>
+    <span class="particle p2"></span>
+    <span class="particle p3"></span>
+    <span class="particle p4"></span>
+    <span class="particle p5"></span>
+    <span class="particle p6"></span>
+    <span class="particle p7"></span>
+    <span class="particle p8"></span>
+    <span class="particle p9"></span>
+    <span class="particle p10"></span>
+    <span class="particle p11"></span>
+    <span class="particle p12"></span>
+   </div>
+
+  <div class="human_answer_screen_wrap">
+    <p class="game_complete_text">GAME COMPLETE</p>
+
+    <p class="human_answer_kr">
+      인간은 고정된 자아를 가진 존재가 아니다.<br>
+      이미 무너지고 있는 방을 자신이라 고집 않는 자만이<br>
+      끝내 새로운 방에 이를 수 있다.<br>
+      그러니 아파하되 두려워 말라. 문을 열어라.
+    </p>
+
+    <p class="human_answer_en">
+      Live beyond the role you once thought was final.
+    </p>
+
+  </div>
+</section>
+    
+  <!-- Connect external JS -->
+  <script src="script.js"></script>
+</body>
+</html>
